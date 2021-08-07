@@ -10,8 +10,8 @@ import com.osreboot.ridhvl2.template.HvlChronology;
 import com.osreboot.ridhvl2.template.HvlDisplayWindowed;
 import com.osreboot.ridhvl2.template.HvlTemplateI;
 
+import chess.client.module.ModuleMenuLink;
 import chess.common.foundation.Descriptor;
-import chess.common.foundation.ModuleMenuLink;
 
 public class ClientMain extends HvlTemplateI{
 
@@ -26,6 +26,8 @@ public class ClientMain extends HvlTemplateI{
 
 	@Override
 	public void initialize(){
+		hvlLoad("ButtonMask.png");
+		
 		hvlLoad("INOF.hvlft");
 
 		ClientNetwork.initialize(new Descriptor(), () -> createFragment());
