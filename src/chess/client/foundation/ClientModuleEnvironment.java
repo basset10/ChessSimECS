@@ -3,7 +3,7 @@ package chess.client.foundation;
 import com.osreboot.hvol2.foundation.common.fragment.Fragment;
 import com.osreboot.hvol2.foundation.common.fragment.FragmentModule;
 
-public class ModuleMenuLobbyManager extends FragmentModule{
+public class ClientModuleEnvironment extends FragmentModule{
 	
 	@Override
 	public void initialize(){

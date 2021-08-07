@@ -3,7 +3,6 @@ package chess.server;
 import static com.osreboot.ridhvl2.HvlStatics.hvlLoad;
 
 import com.osreboot.hvol2.direct.HvlDirect;
-import com.osreboot.hvol2.foundation.common.fragment.FragmentPlayer;
 import com.osreboot.hvol2.foundation.common.fragment.FragmentState;
 import com.osreboot.hvol2.foundation.server.ServerBalancer;
 import com.osreboot.hvol2.foundation.server.ServerFragment;
@@ -14,7 +13,9 @@ import com.osreboot.ridhvl2.template.HvlDisplayWindowed;
 import com.osreboot.ridhvl2.template.HvlTemplateI;
 
 import chess.common.foundation.Descriptor;
-import chess.server.foundation.ModuleServerEnvironment;
+import chess.common.foundation.FragmentPlayerChessSim;
+import chess.server.foundation.ServerModuleEnvironment;
+import chess.server.foundation.ServerModuleLobbyManager;
 
 public class ServerMain extends HvlTemplateI{
 	
@@ -41,13 +42,14 @@ public class ServerMain extends HvlTemplateI{
 	}
 	
 	private ServerFragment createFragment(){
-		ServerFragment fragment = new ServerFragment(i -> new FragmentPlayer(i));
+		ServerFragment fragment = new ServerFragment(i -> new FragmentPlayerChessSim(i));
 		
 		FragmentState stateLobby = new FragmentState(fragment, Descriptor.STATE_LOBBY);
+		stateLobby.add(new ServerModuleLobbyManager());
 		fragment.add(stateLobby);
 		
 		FragmentState stateGame = new FragmentState(fragment, Descriptor.STATE_GAME);
-		stateGame.add(new ModuleServerEnvironment());
+		stateGame.add(new ServerModuleEnvironment());
 		fragment.add(stateGame);
 		
 		fragment.setState(Descriptor.STATE_LOBBY);

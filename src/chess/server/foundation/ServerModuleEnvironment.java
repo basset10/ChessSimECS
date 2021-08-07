@@ -1,9 +1,9 @@
-package chess.client.foundation;
+package chess.server.foundation;
 
 import com.osreboot.hvol2.foundation.common.fragment.Fragment;
 import com.osreboot.hvol2.foundation.common.fragment.FragmentModule;
 
-public class ModuleClientEnvironment extends FragmentModule{
+public class ServerModuleEnvironment extends FragmentModule{
 	
 	@Override
 	public void initialize(){

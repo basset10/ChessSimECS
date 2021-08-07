@@ -11,8 +11,7 @@ public class Descriptor implements ClientDescriptor, ServerDescriptor{
 	STATE_GAME = "GAME";
 
 	public static final String
-	KEY_LOBBY_STATUS = "game.lobby.status",
-	KEY_LOBBY_STATUS_COLLECTIVE = "game.lobby.statuscollective";
+	KEY_LOBBY_STATUS = "lobby.status";
 
 	@Override
 	public HvlGameInfo getGameInfo(){

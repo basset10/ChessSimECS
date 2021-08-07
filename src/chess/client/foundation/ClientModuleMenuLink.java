@@ -8,11 +8,11 @@ import com.osreboot.hvol2.foundation.common.fragment.FragmentModule;
 import com.osreboot.ridhvl2.menu.HvlComponent;
 import com.osreboot.ridhvl2.menu.HvlMenu;
 
-public class ModuleMenuLink extends FragmentModule{
+public class ClientModuleMenuLink extends FragmentModule{
 
 	private ArrayList<HvlComponent> menus;
 	
-	public ModuleMenuLink(HvlComponent... menusArg){
+	public ClientModuleMenuLink(HvlComponent... menusArg){
 		menus = new ArrayList<>(Arrays.asList(menusArg));
 	}
 	
