@@ -14,6 +14,7 @@ import com.osreboot.ridhvl2.template.HvlDisplayWindowed;
 import com.osreboot.ridhvl2.template.HvlTemplateI;
 
 import chess.common.foundation.Descriptor;
+import chess.server.foundation.ModuleServerEnvironment;
 
 public class ServerMain extends HvlTemplateI{
 	
@@ -46,6 +47,7 @@ public class ServerMain extends HvlTemplateI{
 		fragment.add(stateLobby);
 		
 		FragmentState stateGame = new FragmentState(fragment, Descriptor.STATE_GAME);
+		stateGame.add(new ModuleServerEnvironment());
 		fragment.add(stateGame);
 		
 		fragment.setState(Descriptor.STATE_LOBBY);

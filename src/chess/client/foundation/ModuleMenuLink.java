@@ -1,4 +1,4 @@
-package chess.client.module;
+package chess.client.foundation;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -9,7 +9,11 @@ public class Descriptor implements ClientDescriptor, ServerDescriptor{
 	public static final String
 	STATE_LOBBY = "LOBBY",
 	STATE_GAME = "GAME";
-	
+
+	public static final String
+	KEY_LOBBY_STATUS = "game.lobby.status",
+	KEY_LOBBY_STATUS_COLLECTIVE = "game.lobby.statuscollective";
+
 	@Override
 	public HvlGameInfo getGameInfo(){
 		return new HvlGameInfo("chess_sim_ecs", "1.0");

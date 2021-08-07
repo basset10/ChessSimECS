@@ -10,7 +10,8 @@ import com.osreboot.ridhvl2.template.HvlChronology;
 import com.osreboot.ridhvl2.template.HvlDisplayWindowed;
 import com.osreboot.ridhvl2.template.HvlTemplateI;
 
-import chess.client.module.ModuleMenuLink;
+import chess.client.foundation.ModuleClientEnvironment;
+import chess.client.foundation.ModuleMenuLink;
 import chess.common.foundation.Descriptor;
 
 public class ClientMain extends HvlTemplateI{
@@ -51,6 +52,7 @@ public class ClientMain extends HvlTemplateI{
 		
 		FragmentState stateGame = new FragmentState(fragment, Descriptor.STATE_GAME);
 		stateGame.add(new ModuleMenuLink(MenuManager.menuGame));
+		stateGame.add(new ModuleClientEnvironment());
 		fragment.add(stateGame);
 		
 		return fragment;

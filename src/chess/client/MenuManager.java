@@ -29,6 +29,7 @@ public final class MenuManager {
 
 	public static final float
 	PADDING_MENU = 16f,
+	SPACER_LARGE = 32f,
 	OFFSET_TEXT_X = 8f,
 	OFFSET_TEXT_Y = 4f;
 	
@@ -62,26 +63,64 @@ public final class MenuManager {
 			ClientNetwork.connect();
 			HvlMenu.set(menuConnecting);
 		}));
+		menuMain.add(new HvlSpacer(SPACER_LARGE));
+		menuMain.add(HvlButtonLabeled.fromDefault().text("Quit").clicked(b -> {
+			ClientMain.newest().setExiting();
+		}));
 		
 		menuConnecting = HvlArranger.fromDefault();
 		menuConnecting.add(HvlLabel.fromDefault().text("Connecting..."));
+		menuConnecting.add(HvlSpacer.fromDefault());
+		menuConnecting.add(HvlButtonLabeled.fromDefault().text("Cancel").clicked(b -> {
+			ClientNetwork.disconnect();
+			HvlMenu.set(menuMain);
+		}));
 		
 		menuLobby = HvlArranger.fromDefault();
-		menuLobby.add(HvlLabel.fromDefault().text("Chess Sim ECS Server Lobby"));
+		menuLobby.add(HvlLabel.fromDefault().text("Server Lobby"));
+		menuLobby.add(new HvlSpacer(SPACER_LARGE));
+		menuLobby.add(HvlLabel.fromDefault().text("Spectators"));
 		menuLobby.add(HvlSpacer.fromDefault());
-		menuLobby.add(HvlLabel.fromDefault().align(0f, 0f).overrideHeight(512f).set(HvlLabel.TAG_UPDATE, (d, e, c) -> {
+		menuLobby.add(HvlButtonLabeled.fromDefault().align(0f, 0f).overrideHeight(128f).set(HvlButtonLabeled.TAG_UPDATE, (d, e, c) -> {
 			String players = "";
 			for(FragmentPlayer player : ClientNetwork.getFragment().getPlayers()){
 				players += "\\n" + player.uid;
 			}
-			((HvlLabel)c).text(players);
-			HvlLabel.DEFAULT_UPDATE.run(d, e, c);
-		}).set(HvlLabel.TAG_DRAW, (d, e, c) -> {
-			hvlDraw(hvlQuad(e.getX(), e.getY(), e.getWidth(), e.getHeight()), hvlColor(0.2f, 1f));
-			drawMovingGradient(e.getX(), e.getY(), e.getWidth(), e.getHeight(), hvlColor(0.4f, 1f));
-			HvlLabel.DEFAULT_DRAW.run(d, e, c);
+			((HvlButtonLabeled)c).text(players);
+			HvlButtonLabeled.DEFAULT_UPDATE.run(d, e, c);
+		}).set(HvlButtonLabeled.TAG_DRAW, (d, e, c) -> {
+			HvlButtonLabeled.DEFAULT_DRAW.run(d, e, c);
+			drawMovingGradient(e.getX(), e.getY(), e.getWidth(), e.getHeight(), hvlColor(0f, 0.5f));
 		}));
+		menuLobby.add(new HvlSpacer(SPACER_LARGE));
+		menuLobby.add(HvlLabel.fromDefault().text("Black"));
 		menuLobby.add(HvlSpacer.fromDefault());
+		menuLobby.add(HvlButtonLabeled.fromDefault().align(0f, 0f).overrideHeight(64f).set(HvlButtonLabeled.TAG_UPDATE, (d, e, c) -> {
+			String players = "";
+			for(FragmentPlayer player : ClientNetwork.getFragment().getPlayers()){
+				players += "\\n" + player.uid;
+			}
+			((HvlButtonLabeled)c).text(players);
+			HvlButtonLabeled.DEFAULT_UPDATE.run(d, e, c);
+		}).set(HvlButtonLabeled.TAG_DRAW, (d, e, c) -> {
+			HvlButtonLabeled.DEFAULT_DRAW.run(d, e, c);
+			drawMovingGradient(e.getX(), e.getY(), e.getWidth(), e.getHeight(), hvlColor(0f, 0.5f));
+		}));
+		menuLobby.add(new HvlSpacer(SPACER_LARGE));
+		menuLobby.add(HvlLabel.fromDefault().text("White"));
+		menuLobby.add(HvlSpacer.fromDefault());
+		menuLobby.add(HvlButtonLabeled.fromDefault().align(0f, 0f).overrideHeight(64f).set(HvlButtonLabeled.TAG_UPDATE, (d, e, c) -> {
+			String players = "";
+			for(FragmentPlayer player : ClientNetwork.getFragment().getPlayers()){
+				players += "\\n" + player.uid;
+			}
+			((HvlButtonLabeled)c).text(players);
+			HvlButtonLabeled.DEFAULT_UPDATE.run(d, e, c);
+		}).set(HvlButtonLabeled.TAG_DRAW, (d, e, c) -> {
+			HvlButtonLabeled.DEFAULT_DRAW.run(d, e, c);
+			drawMovingGradient(e.getX(), e.getY(), e.getWidth(), e.getHeight(), hvlColor(0f, 0.5f));
+		}));
+		menuLobby.add(new HvlSpacer(SPACER_LARGE));
 		menuLobby.add(HvlButtonLabeled.fromDefault().text("Disconnect").clicked(b -> {
 			ClientNetwork.disconnect();
 			HvlMenu.set(menuMain);
