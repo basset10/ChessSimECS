@@ -22,7 +22,7 @@ public class Descriptor implements ClientDescriptor, ServerDescriptor{
 
 	@Override
 	public String getHostAddress(){
-		return "localhost";
+		return "73.239.1.166";
 	}
 
 	@Override
