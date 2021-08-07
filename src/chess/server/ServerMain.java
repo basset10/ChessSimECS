@@ -18,12 +18,10 @@ public class ServerMain extends HvlTemplateI{
 
 	@Override
 	public void initialize() {
-		ServerNetworkManager.initialize();		
 	}
 
 	@Override
 	public void update(float delta) {
-		ServerNetworkManager.update(delta);
 	}
 
 }

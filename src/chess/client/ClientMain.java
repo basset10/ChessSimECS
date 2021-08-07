@@ -5,12 +5,9 @@ import com.osreboot.ridhvl2.template.HvlChronology;
 import com.osreboot.ridhvl2.template.HvlDisplayWindowed;
 import com.osreboot.ridhvl2.template.HvlTemplateI;
 
-import chess.client.menu.ClientMenuManager;
 import chess.common.Util;
 
 public class ClientMain extends HvlTemplateI{
-
-	private ClientGame game;
 
 	//Automatic draw when only kings are on the board
 	//50-move rule draw
@@ -35,17 +32,10 @@ public class ClientMain extends HvlTemplateI{
 
 	@Override
 	public void initialize() {
-		ClientLoader.loadTextures();
-		ClientNetworkManager.initialize();
-		game = new ClientGame(ClientNetworkManager.id);
-		ClientMenuManager.initialize(game);
 	}
 
 	@Override
-	public void update(float delta) {
-		ClientNetworkManager.update(delta);
-		Util.update();
-		game.update(delta);		
+	public void update(float delta) {;		
 	}
 
 }
