@@ -7,11 +7,13 @@ import static com.osreboot.ridhvl2.HvlStatics.hvlFont;
 import static com.osreboot.ridhvl2.HvlStatics.hvlQuad;
 import static com.osreboot.ridhvl2.HvlStatics.hvlTexture;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 
 import com.osreboot.hvol2.foundation.client.ClientNetwork;
-import com.osreboot.hvol2.foundation.common.fragment.FragmentPlayer;
 import com.osreboot.ridhvl2.menu.HvlDefault;
 import com.osreboot.ridhvl2.menu.HvlMenu;
 import com.osreboot.ridhvl2.menu.component.HvlArranger;
@@ -38,6 +40,8 @@ public final class MenuManager {
 
 	public static HvlArranger menuMain, menuConnecting, menuDisconnected, menuLobby, menuGame;
 
+	public static List<HvlArranger> menusOffline;
+	
 	public static void initialize(){
 		HvlDefault.put(new HvlArranger(false, 0f, 0.5f));
 		HvlDefault.put(new HvlSpacer(8f));
@@ -93,9 +97,9 @@ public final class MenuManager {
 		menuLobby.add(HvlSpacer.fromDefault());
 		menuLobby.add(HvlButtonLabeled.fromDefault().align(0f, 0f).overrideHeight(128f).set(HvlButtonLabeled.TAG_UPDATE, (d, e, c) -> {
 			String players = "";
-			for(FragmentPlayer player : ClientNetwork.getFragment().getPlayers()){
-				if(((PlayerChessSim)player).team == null)
-					players += "\\n" + player.uid + (((PlayerChessSim)player).isReady ? " [READY]" : " [ ]");
+			for(PlayerChessSim player : ClientNetwork.getFragment().<PlayerChessSim>getPlayers()){
+				if(player.team == null)
+					players += "\\n" + player.uid + (player.isReady ? " [READY]" : " [ ]");
 			}
 			((HvlButtonLabeled)c).text(players);
 			HvlButtonLabeled.DEFAULT_UPDATE.run(d, e, c);
@@ -110,9 +114,9 @@ public final class MenuManager {
 		menuLobby.add(HvlSpacer.fromDefault());
 		menuLobby.add(HvlButtonLabeled.fromDefault().align(0f, 0f).overrideHeight(64f).set(HvlButtonLabeled.TAG_UPDATE, (d, e, c) -> {
 			String players = "";
-			for(FragmentPlayer player : ClientNetwork.getFragment().getPlayers()){
-				if(((PlayerChessSim)player).team == TeamColor.BLACK)
-					players += "\\n" + player.uid + (((PlayerChessSim)player).isReady ? " [READY]" : " [ ]");
+			for(PlayerChessSim player : ClientNetwork.getFragment().<PlayerChessSim>getPlayers()){
+				if(player.team == TeamColor.BLACK)
+					players += "\\n" + player.uid + (player.isReady ? " [READY]" : " [ ]");
 			}
 			((HvlButtonLabeled)c).text(players);
 			HvlButtonLabeled.DEFAULT_UPDATE.run(d, e, c);
@@ -127,9 +131,9 @@ public final class MenuManager {
 		menuLobby.add(HvlSpacer.fromDefault());
 		menuLobby.add(HvlButtonLabeled.fromDefault().align(0f, 0f).overrideHeight(64f).set(HvlButtonLabeled.TAG_UPDATE, (d, e, c) -> {
 			String players = "";
-			for(FragmentPlayer player : ClientNetwork.getFragment().getPlayers()){
-				if(((PlayerChessSim)player).team == TeamColor.WHITE)
-					players += "\\n" + player.uid + (((PlayerChessSim)player).isReady ? " [READY]" : " [ ]");
+			for(PlayerChessSim player : ClientNetwork.getFragment().<PlayerChessSim>getPlayers()){
+				if(player.team == TeamColor.WHITE)
+					players += "\\n" + player.uid + (player.isReady ? " [READY]" : " [ ]");
 			}
 			((HvlButtonLabeled)c).text(players);
 			HvlButtonLabeled.DEFAULT_UPDATE.run(d, e, c);
@@ -150,17 +154,21 @@ public final class MenuManager {
 		}));
 
 		menuGame = HvlArranger.fromDefault();
+		
+		menusOffline = Arrays.asList(menuMain, menuConnecting, menuDisconnected);
 
 		HvlMenu.set(menuMain);
 	}
 
 	public static void update(float delta){
+		if(!ClientNetwork.isConnected() && !menusOffline.contains(HvlMenu.get().get(0))) HvlMenu.set(menuDisconnected); // TODO fix this crash
+		
 		HvlMenu.operate(delta, hvlEnvironment(PADDING_MENU, PADDING_MENU, Display.getWidth() - 2f * PADDING_MENU, Display.getHeight() - 2f * PADDING_MENU));
 	}
 
 	private static void drawMovingGradient(float x, float y, float width, float height, Color color){
 		float timer = ClientMain.newest().getTimer().getTotalTime() * 0.1f;
-		hvlDraw(hvlQuad(x, y, width, height, 0f, timer, 1f, timer + (height / 4096f)), hvlTexture(0), color);
+		hvlDraw(hvlQuad(x, y, width, height, 0f, timer, 1f, timer + (height / 4096f)), hvlTexture(ClientMain.INDEX_BUTTON_MASK), color);
 	}
 
 }

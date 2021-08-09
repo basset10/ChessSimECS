@@ -46,6 +46,7 @@ public class Environment {
 	
 	public void update(float delta) {
 		SystemSelectMove.run(this);
+		SystemRender.run(delta, this);
 	}
 	
 }
