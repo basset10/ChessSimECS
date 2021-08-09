@@ -23,7 +23,7 @@ import com.osreboot.ridhvl2.menu.component.HvlSpacer;
 
 import chess.client.foundation.ClientEventMenuInteract;
 import chess.common.ecs.TeamColor;
-import chess.common.foundation.FragmentPlayerChessSim;
+import chess.common.foundation.PlayerChessSim;
 import chess.common.hvl.HvlField;
 
 public final class MenuManager {
@@ -94,8 +94,8 @@ public final class MenuManager {
 		menuLobby.add(HvlButtonLabeled.fromDefault().align(0f, 0f).overrideHeight(128f).set(HvlButtonLabeled.TAG_UPDATE, (d, e, c) -> {
 			String players = "";
 			for(FragmentPlayer player : ClientNetwork.getFragment().getPlayers()){
-				if(((FragmentPlayerChessSim)player).team == null)
-					players += "\\n" + player.uid + (((FragmentPlayerChessSim)player).isReady ? " [READY]" : " [ ]");
+				if(((PlayerChessSim)player).team == null)
+					players += "\\n" + player.uid + (((PlayerChessSim)player).isReady ? " [READY]" : " [ ]");
 			}
 			((HvlButtonLabeled)c).text(players);
 			HvlButtonLabeled.DEFAULT_UPDATE.run(d, e, c);
@@ -111,8 +111,8 @@ public final class MenuManager {
 		menuLobby.add(HvlButtonLabeled.fromDefault().align(0f, 0f).overrideHeight(64f).set(HvlButtonLabeled.TAG_UPDATE, (d, e, c) -> {
 			String players = "";
 			for(FragmentPlayer player : ClientNetwork.getFragment().getPlayers()){
-				if(((FragmentPlayerChessSim)player).team == TeamColor.BLACK)
-					players += "\\n" + player.uid + (((FragmentPlayerChessSim)player).isReady ? " [READY]" : " [ ]");
+				if(((PlayerChessSim)player).team == TeamColor.BLACK)
+					players += "\\n" + player.uid + (((PlayerChessSim)player).isReady ? " [READY]" : " [ ]");
 			}
 			((HvlButtonLabeled)c).text(players);
 			HvlButtonLabeled.DEFAULT_UPDATE.run(d, e, c);
@@ -128,8 +128,8 @@ public final class MenuManager {
 		menuLobby.add(HvlButtonLabeled.fromDefault().align(0f, 0f).overrideHeight(64f).set(HvlButtonLabeled.TAG_UPDATE, (d, e, c) -> {
 			String players = "";
 			for(FragmentPlayer player : ClientNetwork.getFragment().getPlayers()){
-				if(((FragmentPlayerChessSim)player).team == TeamColor.WHITE)
-					players += "\\n" + player.uid + (((FragmentPlayerChessSim)player).isReady ? " [READY]" : " [ ]");
+				if(((PlayerChessSim)player).team == TeamColor.WHITE)
+					players += "\\n" + player.uid + (((PlayerChessSim)player).isReady ? " [READY]" : " [ ]");
 			}
 			((HvlButtonLabeled)c).text(players);
 			HvlButtonLabeled.DEFAULT_UPDATE.run(d, e, c);

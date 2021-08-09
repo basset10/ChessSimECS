@@ -13,7 +13,7 @@ import com.osreboot.ridhvl2.template.HvlDisplayWindowed;
 import com.osreboot.ridhvl2.template.HvlTemplateI;
 
 import chess.common.foundation.Descriptor;
-import chess.common.foundation.FragmentPlayerChessSim;
+import chess.common.foundation.PlayerChessSim;
 import chess.server.foundation.ServerModuleEnvironment;
 import chess.server.foundation.ServerModuleLobbyManager;
 
@@ -42,7 +42,7 @@ public class ServerMain extends HvlTemplateI{
 	}
 	
 	private ServerFragment createFragment(){
-		ServerFragment fragment = new ServerFragment(i -> new FragmentPlayerChessSim(i));
+		ServerFragment fragment = new ServerFragment(i -> new PlayerChessSim(i));
 		
 		FragmentState stateLobby = new FragmentState(fragment, Descriptor.STATE_LOBBY);
 		stateLobby.add(new ServerModuleLobbyManager());
