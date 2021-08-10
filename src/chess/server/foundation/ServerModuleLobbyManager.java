@@ -48,7 +48,7 @@ public class ServerModuleLobbyManager extends FragmentModule{
 	public boolean persist(Fragment fragment, HvlIdentityAnarchy identity, String key, Serializable value){
 		// Handle lobby status packets
 		if(key.equals(Descriptor.KEY_LOBBY_STATUS)){
-			PlayerChessSim player = fragment.getPlayer(identity);
+			PlayerChessSim player = ((ServerFragment)fragment).getPlayer(identity);
 			if(player != null){
 				PacketLobbyStatus packet = (PacketLobbyStatus)value;
 				if(packet.toggleReady) player.isReady = !player.isReady;
