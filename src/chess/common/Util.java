@@ -28,13 +28,9 @@ public class Util {
 					leftMouseClick = true;
 				}
 			}
-		}		
-		if(Mouse.isButtonDown(0)) {
-			leftMouseState = true;
-		}else {
-			leftMouseState = false;
-		}		
-	}	
+		}
+		leftMouseState = Mouse.isButtonDown(0);
+	}
 
 	public static boolean leftMouseClick() {
 		return leftMouseClick;

@@ -29,10 +29,10 @@ public final class SystemSelectMove {
 	
 	private static boolean pieceClicked(EntityPiece p) {
 		
-		if(Util.getCursorX() >= getScreenCoords(p.pos.x, p.pos.y).x - (SystemRender.SIZE_BOARD_SPACE * SystemRender.SIZE_PIECE_SCALE)/2 &&
-				Util.getCursorX() <= getScreenCoords(p.pos.x, p.pos.y).x + (SystemRender.SIZE_BOARD_SPACE * SystemRender.SIZE_PIECE_SCALE)/2 &&
-				Util.getCursorY() >= getScreenCoords(p.pos.x, p.pos.y).y - (SystemRender.SIZE_BOARD_SPACE * SystemRender.SIZE_PIECE_SCALE)/2 &&
-				Util.getCursorY() <= getScreenCoords(p.pos.x, p.pos.y).y + (SystemRender.SIZE_BOARD_SPACE * SystemRender.SIZE_PIECE_SCALE)/2 &&
+		if(Util.getCursorX() >= getScreenCoords(p.pos.x, p.pos.y).x + (SystemRender.SIZE_BOARD_SPACE / 2f) - (SystemRender.SIZE_BOARD_SPACE * SystemRender.SIZE_PIECE_SCALE)/2 &&
+				Util.getCursorX() <= getScreenCoords(p.pos.x, p.pos.y).x + (SystemRender.SIZE_BOARD_SPACE / 2f) + (SystemRender.SIZE_BOARD_SPACE * SystemRender.SIZE_PIECE_SCALE)/2 &&
+				Util.getCursorY() >= getScreenCoords(p.pos.x, p.pos.y).y + (SystemRender.SIZE_BOARD_SPACE / 2f) - (SystemRender.SIZE_BOARD_SPACE * SystemRender.SIZE_PIECE_SCALE)/2 &&
+				Util.getCursorY() <= getScreenCoords(p.pos.x, p.pos.y).y + (SystemRender.SIZE_BOARD_SPACE / 2f) + (SystemRender.SIZE_BOARD_SPACE * SystemRender.SIZE_PIECE_SCALE)/2 &&
 				Util.leftMouseClick()) {
 			return true;
 		}else {
