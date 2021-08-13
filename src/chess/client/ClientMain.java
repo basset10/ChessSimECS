@@ -13,6 +13,7 @@ import com.osreboot.ridhvl2.template.HvlTemplateI;
 import chess.client.foundation.ClientModuleEnvironment;
 import chess.client.foundation.ClientModuleLobbyManager;
 import chess.client.foundation.ClientModuleMenuLink;
+import chess.common.Util;
 import chess.common.foundation.Descriptor;
 
 public class ClientMain extends HvlTemplateI{
@@ -68,8 +69,10 @@ public class ClientMain extends HvlTemplateI{
 	@Override
 	public void update(float delta){
 		ClientNetwork.update(delta);
-
+		
 		MenuManager.update(delta);
+		
+		Util.update();
 	}
 
 	private ClientFragment createFragment(){
