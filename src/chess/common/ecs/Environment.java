@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 public class Environment {
 	
+	public int turnNumber = 0;
+	
+	public ArrayList<PlayerMove> incomingMoves = new ArrayList<>();
+	public ArrayList<PlayerMove> outgoingMoves = new ArrayList<>();
+	
 	public ArrayList<EntityPiece> pieces = new ArrayList<EntityPiece>();
 	
 	public Environment() {
@@ -49,6 +54,14 @@ public class Environment {
 	public void update(float delta) {
 		SystemSelectMove.run(this);
 		SystemRender.run(delta, this);
+	}
+	
+	public void insertIncomingMove(PlayerMove move){
+		incomingMoves.add(move);
+	}
+	
+	public PlayerMove readOutgoingMove(){
+		return outgoingMoves.remove(0);
 	}
 	
 }
