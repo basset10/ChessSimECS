@@ -42,6 +42,8 @@ public class Environment {
 		pieces.add(new EntityPiece(new ComponentPosition(5, 7), PieceType.BISHOP, TeamColor.WHITE));
 		pieces.add(new EntityPiece(new ComponentPosition(6, 7), PieceType.KNIGHT, TeamColor.WHITE));
 		pieces.add(new EntityPiece(new ComponentPosition(7, 7), PieceType.ROOK, TeamColor.WHITE));
+		
+		SystemRender.initialize();
 	}
 	
 	public void update(float delta) {
