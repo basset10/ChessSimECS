@@ -10,6 +10,8 @@ public class Environment {
 	public ArrayList<PlayerMove> outgoingMoves = new ArrayList<>();
 	
 	public ArrayList<EntityPiece> pieces = new ArrayList<EntityPiece>();
+	public ArrayList<ChessCoord> validMoves = new ArrayList<ChessCoord>();
+	
 	
 	public Environment() {
 		pieces.add(new EntityPiece(new ComponentPosition(0, 0), PieceType.ROOK, TeamColor.BLACK));
@@ -29,6 +31,9 @@ public class Environment {
 		pieces.add(new EntityPiece(new ComponentPosition(5, 1), PieceType.PAWN, TeamColor.BLACK));
 		pieces.add(new EntityPiece(new ComponentPosition(6, 1), PieceType.PAWN, TeamColor.BLACK));
 		pieces.add(new EntityPiece(new ComponentPosition(7, 1), PieceType.PAWN, TeamColor.BLACK));
+		
+		pieces.add(new EntityPiece(new ComponentPosition(3, 4), PieceType.ROOK, TeamColor.WHITE));
+		pieces.add(new EntityPiece(new ComponentPosition(4, 3), PieceType.ROOK, TeamColor.BLACK));
 		
 		pieces.add(new EntityPiece(new ComponentPosition(0, 6), PieceType.PAWN, TeamColor.WHITE));
 		pieces.add(new EntityPiece(new ComponentPosition(1, 6), PieceType.PAWN, TeamColor.WHITE));
@@ -54,6 +59,7 @@ public class Environment {
 	public void update(float delta) {
 		SystemSelectMove.run(this);
 		SystemRender.run(delta, this);
+		
 	}
 	
 	public void insertIncomingMove(PlayerMove move){

@@ -11,6 +11,7 @@ import static com.osreboot.ridhvl2.HvlStatics.hvlTexture;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.Color;
 
 import com.osreboot.hvol2.foundation.client.ClientNetwork;
 import com.osreboot.ridhvl2.HvlCoord;
@@ -34,37 +35,37 @@ public final class SystemRender {
 	HEIGHT_PLAYER_UI_NAME = 32f,
 	HEIGHT_PLAYER_UI_ROLE = 20f,
 	HEIGHT_PLAYER_UI = HEIGHT_PLAYER_UI_NAME + HEIGHT_PLAYER_UI_ROLE;
-	
+
 	private static HvlCoord lastDisplaySize;
-	
+
 	private static HvlRenderFrame renderFrameReflection;
 	private static HvlShader shaderReflection;
-	
+
 	public static void initialize(){
 		initializeRenderFrames();
 
 		shaderReflection = new HvlShader("res/shader/Reflection.frag");
-//		System.out.println(shaderReflection.getFragLog());
+		//		System.out.println(shaderReflection.getFragLog());
 	}
-	
+
 	private static void initializeRenderFrames(){
 		lastDisplaySize = new HvlCoord(Display.getWidth(), Display.getHeight());
 
 		renderFrameReflection = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
 	}
-	
+
 	public static void run(float delta, Environment environment){
 		if(lastDisplaySize.x != Display.getWidth() || lastDisplaySize.y != Display.getHeight()){
 			initializeRenderFrames();
 		}
-		
+
 		renderFrameReflection.doCapture(() -> {
 			// Render background
 			float backgroundXOffset = ClientMain.newest().getTimer().getTotalTime() / 64f;
 			hvlDraw(hvlQuad(0, 0, Display.getWidth(), Display.getHeight(),
 					backgroundXOffset, 0f, Display.getWidth() / 2048f + backgroundXOffset, Display.getHeight() / 2048f),
 					hvlTexture(ClientMain.INDEX_PLASMA), hvlColor(0.4f, 1f));
-			
+
 			// Render player names / tags
 			PlayerChessSim playerBlack = null;
 			PlayerChessSim playerWhite = null;
@@ -96,12 +97,18 @@ public final class SystemRender {
 				hvlDraw(hvlQuadc(screen.x + (SIZE_BOARD_SPACE / 2f), screen.y + (SIZE_BOARD_SPACE / 2f), SIZE_BOARD_SPACE * SIZE_PIECE_SCALE, SIZE_BOARD_SPACE * SIZE_PIECE_SCALE),
 						hvlTexture(piece.team == TeamColor.BLACK ? piece.type.textureBlack : piece.type.textureWhite));
 			}
+
+			// Render possible moves
+			for(ChessCoord c : environment.validMoves) {
+				hvlDraw(hvlQuadc(getScreenCoords(c.x, c.y).x + (SystemRender.SIZE_BOARD_SPACE / 2f),
+						getScreenCoords(c.x, c.y).y + (SystemRender.SIZE_BOARD_SPACE / 2f), 10, 10), Color.green);
+			}
 		});
-		
+
 		shaderReflection.doShade(() -> {
 			shaderReflection.send("resolution", new HvlCoord(Display.getWidth(), Display.getHeight()));
 			shaderReflection.send("locationMirror", getScreenCoords(0, 8).y + 8f);
-			
+
 			hvlDraw(hvlQuad(0, 0, Display.getWidth(), Display.getHeight(), 0, 1, 1, 0), renderFrameReflection.getTexture());
 		});
 	}
@@ -115,7 +122,7 @@ public final class SystemRender {
 		float valueTeam = player.team == TeamColor.BLACK ? 0.1f : player.team == TeamColor.WHITE ? 0.9f : 0.5f;
 		float valueTeamFont = player.team == TeamColor.BLACK ? 0.9f : player.team == TeamColor.WHITE ? 0.1f : 1f;
 		String nameTeam = player.team == TeamColor.BLACK ? "BLACK" : player.team == TeamColor.WHITE ? "WHITE" : "SPECTATOR";
-		
+
 		hvlRotate(x, y, rotate, () -> {
 			hvlDraw(hvlQuad(x - 1f, y - 1f, WIDTH_PLAYER_UI + 2f, HEIGHT_PLAYER_UI_NAME + 2f), hvlColor(1f, 1f));
 			hvlDraw(hvlQuad(x - 1f, y + HEIGHT_PLAYER_UI_NAME - 1f, WIDTH_PLAYER_UI_ROLE + 2f, HEIGHT_PLAYER_UI_ROLE + 2f), hvlColor(1f, 1f));
