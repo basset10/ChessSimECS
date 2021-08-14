@@ -1,15 +1,10 @@
 package chess.client;
 
-import static com.osreboot.ridhvl2.HvlStatics.hvlEnvironment;
 import static com.osreboot.ridhvl2.HvlStatics.hvlLoad;
-
-import org.lwjgl.opengl.Display;
 
 import com.osreboot.hvol2.direct.HvlDirect;
 import com.osreboot.hvol2.foundation.client.ClientFragment;
 import com.osreboot.hvol2.foundation.client.ClientNetwork;
-import com.osreboot.hvol2.foundation.client.menu.ClientMenuController;
-import com.osreboot.hvol2.foundation.client.menu.ClientMenuController.Role;
 import com.osreboot.hvol2.foundation.common.fragment.FragmentState;
 import com.osreboot.hvol2.foundation.common.fragment.state.module.ModuleClientMenuLink;
 import com.osreboot.ridhvl2.menu.HvlMenu;
@@ -20,12 +15,6 @@ import com.osreboot.ridhvl2.template.HvlTemplateI;
 import chess.client.foundation.ClientModuleEnvironment;
 import chess.client.foundation.ClientModuleLobbyManager;
 import chess.common.Util;
-import chess.client.foundation.menu.ClientMenuProviderTemplate;
-import chess.client.foundation.menu.MenuConnecting;
-import chess.client.foundation.menu.MenuDisconnected;
-import chess.client.foundation.menu.MenuGame;
-import chess.client.foundation.menu.MenuLobby;
-import chess.client.foundation.menu.MenuMain;
 import chess.common.foundation.Descriptor;
 
 public class ClientMain extends HvlTemplateI{
@@ -75,27 +64,19 @@ public class ClientMain extends HvlTemplateI{
 		hvlLoad("ButtonMask.png");		// 12
 		hvlLoad("Plasma.png");			// 13
 
-		ClientMenuProviderTemplate.initialize();
+		ClientMenuManager.initialize();
 		
-		ClientMenuController menuController = new ClientMenuController(){
-			@Override
-			public void update(float delta){
-				HvlMenu.operate(delta, hvlEnvironment(ClientMenuProviderTemplate.PADDING_MENU, ClientMenuProviderTemplate.PADDING_MENU,
-						Display.getWidth() - 2f * ClientMenuProviderTemplate.PADDING_MENU, Display.getHeight() - 2f * ClientMenuProviderTemplate.PADDING_MENU));
-			}
-		};
-		menuController.add(new MenuMain());
-		menuController.add(new MenuConnecting());
-		menuController.add(new MenuDisconnected(), Role.DESTINATION_DISCONNECT);
-		menuController.add(new MenuGame());
-		menuController.add(new MenuLobby());
-		HvlMenu.set(ClientMenuProviderTemplate.menuMain);
+		HvlMenu.set(ClientMenuManager.menuMain);
 		
-		ClientNetwork.initialize(new Descriptor(), menuController, () -> createFragment());
+		ClientNetwork.initialize(new Descriptor(),
+				() -> createFragment(),
+				() -> HvlMenu.set(ClientMenuManager.menuDisconnected));
 	}
 
 	@Override
 	public void update(float delta){
+		ClientMenuManager.update(delta);
+		
 		ClientNetwork.update(delta);
 		
 		Util.update();
@@ -105,12 +86,12 @@ public class ClientMain extends HvlTemplateI{
 		ClientFragment fragment = new ClientFragment();
 
 		FragmentState stateLobby = new FragmentState(fragment, Descriptor.STATE_LOBBY);
-		stateLobby.add(new ModuleClientMenuLink(ClientMenuProviderTemplate.menuLobby));
+		stateLobby.add(new ModuleClientMenuLink(ClientMenuManager.menuLobby));
 		stateLobby.add(new ClientModuleLobbyManager());
 		fragment.add(stateLobby);
 
 		FragmentState stateGame = new FragmentState(fragment, Descriptor.STATE_GAME);
-		stateGame.add(new ModuleClientMenuLink(ClientMenuProviderTemplate.menuGame));
+		stateGame.add(new ModuleClientMenuLink(ClientMenuManager.menuGame));
 		stateGame.add(new ClientModuleEnvironment());
 		fragment.add(stateGame);
 

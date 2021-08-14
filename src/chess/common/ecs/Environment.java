@@ -61,7 +61,7 @@ public class Environment {
 	}
 	
 	public PlayerMove readOutgoingMove(){
-		return outgoingMoves.remove(0);
+		return outgoingMoves.size() > 0 ? outgoingMoves.remove(0) : null;
 	}
 	
 }
